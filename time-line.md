@@ -34,3 +34,9 @@ Actualmente, visitando [la tabla comparativa](https://modelcontextprotocol.io/cl
 
 [PROMPT_HISTORY/05_tune_the_toolbox.md](./PROMPT_HISTORY/05_tune_the_toolbox.md)
 
+[PROMPT_HISTORY/06_building_blocks.md](./PROMPT_HISTORY/06_building_blocks.md)
+
+### Meta Volante 1
+
+[PROMPT_HISTORY/07_lets_check_the_project.md](./PROMPT_HISTORY/07_lets_check_the_project.md)
+

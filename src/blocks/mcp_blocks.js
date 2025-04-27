@@ -2,6 +2,10 @@ import './setup';
 import './resources';
 import './tools';
 import './host';
+import './auth';
+import './events';
+import './prompts';
+import './storage';
 
 // Importaciones para generadores
 import '../generators/javascript/mcp_setup';

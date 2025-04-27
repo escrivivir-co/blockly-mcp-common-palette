@@ -1,59 +1,80 @@
-import { javascriptGenerator, Order } from "blockly/javascript";
+import { javascriptGenerator, Order } from 'blockly/javascript';
 
 /**
  * Generadores JavaScript para bloques de configuración MCP
  */
 
-javascriptGenerator.forBlock["mcp_create_server"] = function (block) {
-    const name = javascriptGenerator.valueToCode(block, "NAME", Order.ATOMIC);
-    const version = javascriptGenerator.valueToCode(
-        block,
-        "VERSION",
-        Order.ATOMIC
-    );
-
-    const code = `new McpServer({\n  name: ${name},\n  version: ${version}\n})`;
-    return [code, Order.FUNCTION_CALL];
+javascriptGenerator.forBlock['mcp_create_server'] = function(block) {
+  const name = javascriptGenerator.valueToCode(block, 'NAME', Order.ATOMIC);
+  const version = javascriptGenerator.valueToCode(block, 'VERSION', Order.ATOMIC);
+  
+  const code = `new McpServer({\n  name: ${name},\n  version: ${version}\n})`;
+  return [code, Order.FUNCTION_CALL];
 };
 
-javascriptGenerator.forBlock["mcp_create_client"] = function (block) {
-    const name = javascriptGenerator.valueToCode(block, "NAME", Order.ATOMIC);
-    const version = javascriptGenerator.valueToCode(
-        block,
-        "VERSION",
-        Order.ATOMIC
-    );
-
-    const code = `new McpClient({\n  name: ${name},\n  version: ${version}\n})`;
-    return [code, Order.FUNCTION_CALL];
+javascriptGenerator.forBlock['mcp_create_client'] = function(block) {
+  const name = javascriptGenerator.valueToCode(block, 'NAME', Order.ATOMIC);
+  const version = javascriptGenerator.valueToCode(block, 'VERSION', Order.ATOMIC);
+  
+  const code = `new McpClient({\n  name: ${name},\n  version: ${version}\n})`;
+  return [code, Order.FUNCTION_CALL];
 };
 
-javascriptGenerator.forBlock["mcp_stdio_transport_server"] = function (block) {
-    return ["new StdioServerTransport()", Order.FUNCTION_CALL];
+javascriptGenerator.forBlock['mcp_stdio_transport_server'] = function(block) {
+  return ['new StdioServerTransport()', Order.FUNCTION_CALL];
 };
 
-javascriptGenerator.forBlock["mcp_stdio_transport_client"] = function (block) {
-    return ["new StdioClientTransport()", Order.FUNCTION_CALL];
+javascriptGenerator.forBlock['mcp_stdio_transport_client'] = function(block) {
+  return ['new StdioClientTransport()', Order.FUNCTION_CALL];
 };
 
-javascriptGenerator.forBlock["mcp_connect"] = function (block) {
-    const server = javascriptGenerator.valueToCode(
-        block,
-        "SERVER",
-        Order.ATOMIC
-    );
-    const transport = javascriptGenerator.valueToCode(
-        block,
-        "TRANSPORT",
-        Order.ATOMIC
-    );
+javascriptGenerator.forBlock['mcp_http_transport_server'] = function(block) {
+  const port = javascriptGenerator.valueToCode(block, 'PORT', Order.ATOMIC);
+  
+  return [`new HttpServerTransport({ port: ${port} })`, Order.FUNCTION_CALL];
+};
 
-    return `(async () => {
+javascriptGenerator.forBlock['mcp_http_transport_client'] = function(block) {
+  const url = javascriptGenerator.valueToCode(block, 'URL', Order.ATOMIC);
+  
+  return [`new HttpClientTransport({ url: ${url} })`, Order.FUNCTION_CALL];
+};
+
+javascriptGenerator.forBlock['mcp_http_streamable_transport_server'] = function(block) {
+  const port = javascriptGenerator.valueToCode(block, 'PORT', Order.ATOMIC);
+  const sessions = block.getFieldValue('SESSIONS') === 'TRUE';
+  const mode = block.getFieldValue('MODE');
+  
+  return [`new HttpStreamableServerTransport({
+  port: ${port},
+  sessions: ${sessions},
+  mode: "${mode}"
+})`, Order.FUNCTION_CALL];
+};
+
+javascriptGenerator.forBlock['mcp_connect'] = function(block) {
+  const server = javascriptGenerator.valueToCode(block, 'SERVER', Order.ATOMIC);
+  const transport = javascriptGenerator.valueToCode(block, 'TRANSPORT', Order.ATOMIC);
+  
+  return `(async () => {
   try {
     await ${server}.connect(${transport});
-    console.log("Servidor MCP conectado exitosamente");
+    console.log("Componente MCP conectado exitosamente");
   } catch (error) {
-    console.error("Error conectando servidor MCP:", error);
+    console.error("Error conectando componente MCP:", error);
+  }
+})();\n`;
+};
+
+javascriptGenerator.forBlock['mcp_disconnect'] = function(block) {
+  const server = javascriptGenerator.valueToCode(block, 'SERVER', Order.ATOMIC);
+  
+  return `(async () => {
+  try {
+    await ${server}.disconnect();
+    console.log("Componente MCP desconectado exitosamente");
+  } catch (error) {
+    console.error("Error desconectando componente MCP:", error);
   }
 })();\n`;
 };
