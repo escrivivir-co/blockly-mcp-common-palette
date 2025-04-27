@@ -6,7 +6,7 @@ import { tprompts } from './toolbox-mcp/prompts';
 import { tevents } from './toolbox-mcp/events';
 import { tauth } from './toolbox-mcp/auth';
 import { tstorage } from './toolbox-mcp/storage';
-import { tapp } from './toolbox-mcp/app';
+import { thost } from './toolbox-mcp/host';
 
 /**
  * @license
@@ -29,7 +29,7 @@ export const toolbox = {
 		{
 			kind: "sep",
 		},
-		...tapp,
+		...thost,
         ...tsetup,
 		{
 			kind: "sep",

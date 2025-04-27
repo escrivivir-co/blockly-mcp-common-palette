@@ -1,154 +1,108 @@
-export const tapp = [
+export const tprompts = [
     {
         kind: "category",
-
-        name: "MCP Host",
-
-        colour: "#5270A6",
-
+        name: "MCP Prompts",
+        colour: "#A6815C",
         contents: [
             {
                 kind: "block",
-
-                type: "mcp_create_host",
-
+                type: "mcp_define_prompt",
                 inputs: {
                     NAME: {
                         shadow: {
                             type: "text",
-
                             fields: {
-                                TEXT: "Mi Host MCP",
+                                TEXT: "mi-prompt",
                             },
                         },
                     },
                 },
             },
-
             {
                 kind: "block",
-
-                type: "mcp_host_add_server",
-            },
-
-            {
-                kind: "block",
-
-                type: "mcp_host_add_client",
-
+                type: "mcp_prompt_description",
                 inputs: {
-                    CLIENT_NAME: {
+                    DESCRIPTION: {
                         shadow: {
                             type: "text",
-
                             fields: {
-                                TEXT: "cliente-test",
+                                TEXT: "Descripción del prompt",
                             },
                         },
                     },
                 },
             },
-
             {
                 kind: "block",
-
-                type: "mcp_host_start",
-            },
-
-            {
-                kind: "block",
-
-                type: "mcp_host_stop",
-            },
-
-            {
-                kind: "block",
-
-                type: "mcp_create_test_client",
-
+                type: "mcp_prompt_argument",
                 inputs: {
                     NAME: {
                         shadow: {
                             type: "text",
-
                             fields: {
-                                TEXT: "Cliente Test",
+                                TEXT: "argumento",
                             },
                         },
                     },
                 },
             },
-
             {
                 kind: "block",
-
-                type: "mcp_test_read_resource",
-
+                type: "mcp_prompt_callback",
+            },
+            {
+                kind: "block",
+                type: "mcp_return_prompt_messages",
+            },
+            {
+                kind: "block",
+                type: "mcp_add_message",
                 inputs: {
-                    URI: {
+                    ROLE: {
                         shadow: {
                             type: "text",
-
                             fields: {
-                                TEXT: "info://server",
+                                TEXT: "user",
+                            },
+                        },
+                    },
+                    CONTENT: {
+                        shadow: {
+                            type: "text",
+                            fields: {
+                                TEXT: "Contenido del mensaje",
                             },
                         },
                     },
                 },
             },
-
             {
                 kind: "block",
-
-                type: "mcp_test_call_tool",
-
+                type: "mcp_get_prompt",
                 inputs: {
-                    TOOL_NAME: {
+                    NAME: {
                         shadow: {
                             type: "text",
-
                             fields: {
-                                TEXT: "eco",
-                            },
-                        },
-                    },
-
-                    MESSAGE: {
-                        shadow: {
-                            type: "text",
-
-                            fields: {
-                                TEXT: "¡Hola MCP!",
+                                TEXT: "mi-prompt",
                             },
                         },
                     },
                 },
             },
-
             {
                 kind: "block",
-
-                type: "mcp_test_run_sequence",
+                type: "mcp_list_prompts",
             },
-
             {
                 kind: "block",
-
-                type: "mcp_host_on_event",
-            },
-
-            {
-                kind: "block",
-
-                type: "mcp_host_emit_event",
-
+                type: "mcp_get_argument_value",
                 inputs: {
-                    EVENT_NAME: {
+                    ARG: {
                         shadow: {
                             type: "text",
-
                             fields: {
-                                TEXT: "test-complete",
+                                TEXT: "argumento",
                             },
                         },
                     },
