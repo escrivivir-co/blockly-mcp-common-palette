@@ -1,4 +1,4 @@
-# Codelab: (MCP & Blockly) (+ ¿generador tipado?)
+# Codelab: (MCP & Blockly) (+ ¿generador tipado (en previsión?)
 
 Con caracter eminentemente práctico y de spike (enfangarse con código), el presente Codelab parte de [Codelab: Build a custom generator](https://blocklycodelabs.dev/codelabs/custom-generator/index.html) y se inicializa, para **crear un espacio de trabajo**, a partir de un lienzo base Blockly 11 con generador para Javascript. Ver imagen para editor, herramientas y setup:
 
