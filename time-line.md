@@ -30,3 +30,7 @@ Actualmente, visitando [la tabla comparativa](https://modelcontextprotocol.io/cl
 
 [PROMPT_HISTORY/03_expand_toolbox.md](./PROMPT_HISTORY/03_expand_toolbox.md)
 
+[PROMPT_HISTORY/04_inflate_toolbox.md](./PROMPT_HISTORY/04_inflate_toolbox.md)
+
+[PROMPT_HISTORY/05_tune_the_toolbox.md](./PROMPT_HISTORY/05_tune_the_toolbox.md)
+
