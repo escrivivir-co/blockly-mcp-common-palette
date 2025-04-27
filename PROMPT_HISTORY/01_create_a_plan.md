@@ -54,9 +54,9 @@ Basado en el análisis del contenido de la carpeta [mcp-ts-sdk](../mcp-ts-sdk/)
 1.  **Clases Base**
 
     -   `Protocol` (src/shared/protocol.ts): Base para comunicación
-    -   [Server](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html) (src/server/index.ts): Implementación base del servidor
-    -   [Client](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html) (src/client/index.ts): Implementación base del cliente
-    -   [McpServer](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html) (src/server/mcp.ts): API de alto nivel para servidores
+    -   [Server]() (src/server/index.ts): Implementación base del servidor
+    -   [Client]() (src/client/index.ts): Implementación base del cliente
+    -   [McpServer]() (src/server/mcp.ts): API de alto nivel para servidores
     -   `McpClient` (src/client/index.ts): API de alto nivel para clientes
 2.  **Transportes**
 
@@ -70,17 +70,17 @@ Basado en el análisis del contenido de la carpeta [mcp-ts-sdk](../mcp-ts-sdk/)
 
     -   **Recursos**:
 
-        -   [ResourceTemplate](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html): Define patrones para recursos
-        -   [ReadResourceCallback](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html): Para leer recursos
+        -   [ResourceTemplate](): Define patrones para recursos
+        -   [ReadResourceCallback](): Para leer recursos
     -   **Herramientas**:
 
-        -   [tool()](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html): Para registrar herramientas
-        -   [ToolCallback](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html): Para implementar funcionalidad
-        -   [ToolAnnotations](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html): Para metadatos adicionales
+        -   [tool()](): Para registrar herramientas
+        -   [ToolCallback](): Para implementar funcionalidad
+        -   [ToolAnnotations](): Para metadatos adicionales
     -   **Prompts**:
 
-        -   [prompt()](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html): Para registrar prompts
-        -   [PromptCallback](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html): Para implementar templates
+        -   [prompt()](): Para registrar prompts
+        -   [PromptCallback](): Para implementar templates
     -   **Autenticación**:
 
         -   `OAuthClientProvider`: Para integración OAuth
@@ -88,10 +88,10 @@ Basado en el análisis del contenido de la carpeta [mcp-ts-sdk](../mcp-ts-sdk/)
 4.  **Tipos y Validación**
 
     -   Uso extensivo de `zod` para validación de esquemas
-    -   [zodToJsonSchema](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html): Conversión para documentación
+    -   [zodToJsonSchema](): Conversión para documentación
 5.  **Manejo de Errores**
 
-    -   [McpError](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html): Errores específicos del protocolo
+    -   [McpError](): Errores específicos del protocolo
 6.  **Compatibilidad**
 
     -   Soporte para protocolo anterior (2024-11-05)

@@ -37,7 +37,7 @@ Analicemos el coste y los beneficios de reemplazar el panel actual de visualizac
 4.  **Integración JavaScript (`src/index.js`) (Coste: Medio):**
 
     -   **Importar Monaco:** `import * as monaco from 'monaco-editor';`.
-    -   **Inicialización:** En [initApp](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html) (o una función similar que se ejecute después de que el DOM esté listo), inicializar una instancia de Monaco Editor asociada al `div` contenedor.
+    -   **Inicialización:** En [initApp]() (o una función similar que se ejecute después de que el DOM esté listo), inicializar una instancia de Monaco Editor asociada al `div` contenedor.
 
         let monacoEditorInstance = null;
 
@@ -55,7 +55,7 @@ Analicemos el coste y los beneficios de reemplazar el panel actual de visualizac
 
         });
 
-    -   **Actualización ([updateCode](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html)):** En lugar de `generatedCodeElement.textContent = code;`, usar `monacoEditorInstance.setValue(code);`.
+    -   **Actualización ([updateCode]()):** En lugar de `generatedCodeElement.textContent = code;`, usar `monacoEditorInstance.setValue(code);`.
     -   **Listener Botón Descarga:** Añadir un event listener al botón `#downloadCodeBtn`. Dentro del listener:
         -   Obtener el código: `const codeToDownload = monacoEditorInstance.getValue();`
         -   Crear un Blob y un enlace de descarga temporal para iniciar la descarga del archivo `.js`.
@@ -78,7 +78,7 @@ Analicemos el coste y los beneficios de reemplazar el panel actual de visualizac
 Integrar Monaco Editor es **factible** y aporta **beneficios significativos** en términos de usabilidad y funcionalidad para visualizar el código generado. Sin embargo, no es trivial:
 
 -   El **mayor coste** reside en la **configuración correcta de Webpack** y el **aumento del tamaño del bundle**.
--   La modificación del código JavaScript en [index.js](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html) para inicializar y actualizar el editor es de esfuerzo medio.
+-   La modificación del código JavaScript en [index.js]() para inicializar y actualizar el editor es de esfuerzo medio.
 -   Los cambios en HTML y la implementación de la descarga son relativamente sencillos.
 
 Si la mejora en la visualización del código y la capacidad de descarga son importantes, y el aumento del tamaño del bundle es aceptable, el esfuerzo de integración está justificado. Si solo se necesita resaltado básico, alternativas más ligeras como `highlight.js` o `Prism.js` podrían considerarse, aunque no ofrecen la experiencia de "editor" ni la descarga integrada.

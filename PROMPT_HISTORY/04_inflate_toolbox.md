@@ -12,9 +12,9 @@ A continuación presento una tabla con todos los nodos que intervienen en el Ser
 
 | Nodo | Toolbox | Sección | Tipo de Bloque |
 | --- | --- | --- | --- |
-| Crear Servidor MCP | [setup.js](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html) | MCP Setup | mcp_create_server |
-| Configurar Transporte Stdio | [setup.js](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html) | MCP Setup | mcp_stdio_transport_server |
-| Conectar | [setup.js](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html) | MCP Setup | mcp_connect |
+| Crear Servidor MCP | [setup.js]() | MCP Setup | mcp_create_server |
+| Configurar Transporte Stdio | [setup.js]() | MCP Setup | mcp_stdio_transport_server |
+| Conectar | [setup.js]() | MCP Setup | mcp_connect |
 | Definir Recurso Estático | resources.js | MCP Recursos | mcp_define_resource_static |
 | Función callback (recurso) | resources.js | MCP Recursos | mcp_resource_callback |
 | Retornar (recurso) | resources.js | MCP Recursos | mcp_return_resource_content |

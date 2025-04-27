@@ -3,7 +3,7 @@
 Con caracter eminentemente práctico y de spike (enfangarse con código), el presente Codelab parte de [Codelab: Build a custom generator](https://blocklycodelabs.dev/codelabs/custom-generator/index.html) y se inicializa, para **crear un espacio de trabajo**, a partir de un lienzo base Blockly 11 con generador para Javascript. Ver imagen para editor, herramientas y setup:
 
 ```bash
-npx @blockly/create-package app custom-generator-codelab
+npx @blockly/create-package app blockly-mcp-common-palette
 ```
 
 ![](./PICS/mcp_0000.png)
@@ -24,15 +24,10 @@ Actualmente, visitando [la tabla comparativa](https://modelcontextprotocol.io/cl
 ### Plan
 
 [PROMPT_HISTORY/01_create_a_plan.md](./PROMPT_HISTORY/01_create_a_plan.md).
-
 [PROMPT_HISTORY/02_create_a_mark_in_the_horizon.md](./PROMPT_HISTORY/02_create_a_mark_in_the_horizon.md)
-
 [PROMPT_HISTORY/03_expand_toolbox.md](./PROMPT_HISTORY/03_expand_toolbox.md)
-
 [PROMPT_HISTORY/04_inflate_toolbox.md](./PROMPT_HISTORY/04_inflate_toolbox.md)
-
 [PROMPT_HISTORY/05_tune_the_toolbox.md](./PROMPT_HISTORY/05_tune_the_toolbox.md)
-
 [PROMPT_HISTORY/06_building_blocks.md](./PROMPT_HISTORY/06_building_blocks.md)
 
 ### Meta Volante 1
@@ -47,5 +42,7 @@ Actualmente, visitando [la tabla comparativa](https://modelcontextprotocol.io/cl
 
 ### Last sprint
 
+v001:
 
+![](./PICS/v001_.png)
 

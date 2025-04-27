@@ -1,50 +1,91 @@
-# Blockly Sample App
+[English](./README-en.md)
 
-## Purpose
+MCP Blockly Studio
+==================
 
-This app illustrates how to use Blockly together with common programming tools like node/npm, webpack, typescript, eslint, and others. You can use it as the starting point for your own application and modify it as much as you'd like. It contains basic infrastructure for running, building, testing, etc. that you can use even if you don't understand how to configure the related tool yet. When your needs outgrow the functionality provided here, you can replace the provided configuration or tool with your own.
+Un entorno de programación visual para crear aplicaciones basadas en el Protocolo de Contexto de Modelo (MCP) utilizando Blockly de Google.
 
-## Quick Start
+![Interfaz de MCP Blockly Studio](./PICS/mcp_monaco.png)
 
-1. [Install](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) npm if you haven't before.
-2. Run [`npx @blockly/create-package app <application-name>`](https://www.npmjs.com/package/@blockly/create-package) to clone this application to your own machine.
-3. Run `npm install` to install the required dependencies.
-4. Run `npm run start` to run the development server and see the app in action.
-5. If you make any changes to the source code, just refresh the browser while the server is running to see them.
+Descripción general
+-------------------
 
-## Tooling
+MCP Blockly Studio proporciona un enfoque basado en bloques para construir aplicaciones que siguen la [especificación del Protocolo de Contexto de Modelo](). El proyecto utiliza el [SDK de TypeScript para MCP]() para crear servidores, clientes y otros componentes compatibles.
 
-The application uses many of the same tools that the Blockly team uses to develop Blockly itself. Following is a brief overview, and you can read more about them on our [developer site](https://developers.google.com/blockly/guides/contribute/get-started/development_tools).
+Los usuarios pueden:
 
-- Structure: The application is built as an npm package. You can use npm to manage the dependencies of the application.
-- Modules: ES6 modules to handle imports to/exports from other files.
-- Building/bundling: Webpack to build the source code and bundle it into one file for serving.
-- Development server: webpack-dev-server to run locally while in development.
-- Testing: Mocha to run unit tests.
-- Linting: Eslint to lint the code and ensure it conforms with a standard style.
-- UI Framework: Does not use a framework. For more complex applications, you may wish to integrate a UI framework like React or Angular.
+-   Crear servidores MCP con varios recursos y herramientas
+-   Construir clientes que interactúan con servidores MCP
+-   Configurar diferentes tipos de transporte (stdio, HTTP con streaming)
+-   Implementar autenticación, notificaciones y solicitudes
+-   Probar con proyectos de tutorial incorporados
+-   Exportar el código JavaScript generado
 
-You can disable, reconfigure, or replace any of these tools at any time, but they are preconfigured to get you started developing your Blockly application quickly.
+Proyectos de tutorial
+---------------------
 
-## Structure
+MCP Blockly Studio incluye varios proyectos de tutorial:
 
-- `package.json` contains basic information about the app. This is where the scripts to run, build, etc. are listed.
-- `package-lock.json` is used by npm to manage dependencies
-- `webpack.config.js` is the configuration for webpack. This handles bundling the application and running our development server.
-- `src/` contains the rest of the source code.
-- `dist/` contains the packaged output (that you could host on a server, for example). This is ignored by git and will only appear after you run `npm run build` or `npm run start`.
+1.  **Servidor Eco**: Un servidor MCP básico que devuelve los mensajes enviados por los clientes
+2.  **Cliente del Clima**: Un cliente MCP que se conecta a una API de servicio meteorológico
+3.  **Asistente de Tareas**: Un servidor de gestión de tareas con autenticación OAuth
+4.  **Generador de Imágenes**: Un servidor que genera imágenes con notificaciones de progreso
 
-### Source Code
+![Ejemplo de Tutorial](./PICS/mcp_tutorial_1_echo.png)
 
-- `index.html` contains the skeleton HTML for the page. This file is modified during the build to import the bundled source code output by webpack.
-- `index.js` is the entry point of the app. It configures Blockly and sets up the page to show the blocks, the generated code, and the output of running the code in JavaScript.
-- `serialization.js` has code to save and load the workspace using the browser's local storage. This is how your workspace is saved even after refreshing or leaving the page. You could replace this with code that saves the user's data to a cloud database instead.
-- `toolbox.js` contains the toolbox definition for the app. The current toolbox contains nearly every block that Blockly provides out of the box. You probably want to replace this definition with your own toolbox that uses your custom blocks and only includes the default blocks that are relevant to your application.
-- `blocks/text.js` has code for a custom text block, just as an example of creating your own blocks. You probably want to delete this block, and add your own blocks in this directory.
-- `generators/javascript.js` contains the JavaScript generator for the custom text block. You'll need to include block generators for any custom blocks you create, in whatever programming language(s) your application will use.
+Primeros pasos
+--------------
 
-## Serving
+1.  Clona este repositorio
+2.  Ejecuta `npm install` para instalar las dependencias
+3.  Ejecuta `npm run start` para iniciar el servidor de desarrollo
+4.  Selecciona un proyecto de tutorial del menú desplegable o crea uno nuevo desde cero
+5.  Modifica los bloques en el espacio de trabajo
+6.  Visualiza el código JavaScript generado en el panel del editor
+7.  Descarga el código usando el botón "Descargar Código"
 
-To run your app locally, run `npm run start` to run the development server. This mode generates source maps and ingests the source maps created by Blockly, so that you can debug using unminified code.
+Estructura del proyecto
+-----------------------
 
-To deploy your app so that others can use it, run `npm run build` to run a production build. This will bundle your code and minify it to reduce its size. You can then host the contents of the `dist` directory on a web server of your choosing. If you're just getting started, try using [GitHub Pages](https://pages.github.com/).
+El archivo time-line.md es el registro principal de cambios para obtener una visión general del proyecto. En la carpeta PROMPT_HISTORY se encuentra la teoría en profundidad para la línea temporal.
+
+-   [src]() - Código fuente de la aplicación
+    -   `blocks/` - Definiciones de bloques personalizados de Blockly
+    -   `toolbox-mcp/` - Categorías de la caja de herramientas específicas para MCP
+    -   `generators/` - Generadores de código para traducir bloques a JavaScript
+-   [PICS]() - Capturas de pantalla e imágenes del proyecto
+-   [mcp-ts-sdk]() - SDK de TypeScript para MCP (incluido como dependencia)
+
+Construido con
+--------------
+
+-   [Blockly]()
+-   [Editor Monaco]()
+-   [SDK de TypeScript para MCP]()
+-   [Webpack]()
+
+Contribuciones de la comunidad
+------------------------------
+
+¡MCP Blockly Studio es un proyecto de código abierto y damos la bienvenida a las contribuciones de la comunidad! Aquí hay algunas formas en las que puedes ayudar:
+
+-   **Reportar errores** abriendo issues en nuestro [repositorio de GitHub]()
+-   **Sugerir nuevas funcionalidades** que harían la herramienta más útil
+-   **Enviar pull requests** para solucionar problemas o añadir capacidades
+-   **Crear tutoriales** mostrando cómo construir aplicaciones MCP con nuestra herramienta
+-   **Hacer fork del proyecto** para crear tu propia versión especializada
+
+Estamos especialmente interesados en contribuciones que:
+
+-   Añadan nuevos tipos de bloques para funcionalidades de MCP
+-   Mejoren la generación de código
+-   Mejoren la interfaz de usuario y la experiencia de usuario
+-   Añadan más ejemplos y tutoriales
+-   Mejoren la documentación
+
+¡Consulta nuestros [issues abiertos]() para encontrar buenos puntos de partida para contribuir!
+
+Licencia
+--------
+
+Este proyecto está licenciado bajo la GNU General Public License v3.0 - consulta el archivo [LICENSE]() para más detalles.

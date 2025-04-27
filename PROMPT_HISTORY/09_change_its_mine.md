@@ -78,8 +78,8 @@ Searched codebase for "Blockly.Blocks", 18 results
 Para generar el informe de consistencia estructural necesito extraer automáticamente tres listas:
 
 1.  Bloques declarados en las paletas (`toolbox-mcp`): ya los tenemos.
-2.  Bloques implementados en [blocks](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html).
-3.  Generadores de código en [javascript](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html).
+2.  Bloques implementados en [blocks]().
+3.  Generadores de código en [javascript]().
 
 Voy a lanzar estas búsquedas en tu workspace:
 
@@ -203,7 +203,7 @@ Generadores JS (9 tipos):
 Con este informe puedes:
 
 -   Añadir el generador faltante para `mcp_get_template_variables`.
--   Retirar o mover `mcp_internal_helper` de [blocks](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html) si no debe estar público.
+-   Retirar o mover `mcp_internal_helper` de [blocks]() si no debe estar público.
 -   Investigar y/o eliminar `mcp_orphan_generator`.
 
 ## Prompt
@@ -219,7 +219,7 @@ Este código asumirá una estructura de API del lado del servidor como servidor.
 
 Used 1 reference
 
-¡Perfecto! Ahora vamos a crear los generadores de JavaScript correspondientes en [mcp_prompts.js](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html).
+¡Perfecto! Ahora vamos a crear los generadores de JavaScript correspondientes en [mcp_prompts.js]().
 
 Este código asumirá una estructura de API del lado del servidor como `servidor.definePrompt(name, definition)` donde `definition` incluye descripción, argumentos y el callback. También asumirá que dentro del callback, los argumentos están disponibles en un objeto `context.arguments`.
 
@@ -444,7 +444,7 @@ Ahora tienes los bloques y los generadores alineados con el diseño más complej
 -   **Dependencia de Zod:** El generador `mcp_define_tool` ahora depende de que la librería `zod` (o al menos su objeto `z`) esté disponible en el entorno donde se ejecuta el código generado (probablemente el servidor). Asegúrate de que esté instalada y sea accesible. El uso de `eval` es una forma de construir dinámicamente el objeto de esquema Zod a partir de las cadenas generadas; úsalo con precaución.
 -   **API del Servidor/Cliente:** Los generadores asumen APIs como `servidor.tool(...)`, `mcp.tools.call(...)`, `mcp.tools.list(...)`. Adapta estos nombres a tu implementación real.
 -   **Manejo de Errores:** Se añadió un `try...catch` básico en el generador del callback para manejar errores durante la ejecución de la herramienta. Puedes mejorarlo según tus necesidades.
--   **Tipos de Parámetros:** El dropdown `zodParameterTypes` debe definirse (probablemente en [mcp_blocks.js](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html) o similar) con las opciones `[['string', 'string'], ['number', 'number'], ['boolean', 'boolean']]`, etc.
+-   **Tipos de Parámetros:** El dropdown `zodParameterTypes` debe definirse (probablemente en [mcp_blocks.js]() o similar) con las opciones `[['string', 'string'], ['number', 'number'], ['boolean', 'boolean']]`, etc.
 -   **Limpieza:** Revisa si necesitas eliminar generadores o bloques antiguos que ya no se usen después de esta refactorización.
 
 Con estos tres archivos, deberías tener una base sólida y coherente para trabajar con herramientas siguiendo el protocolo MCP y las estructuras vistas en los tutoriales. Recuerda probar exhaustivamente.
@@ -452,7 +452,7 @@ Con estos tres archivos, deberías tener una base sólida y coherente para traba
 **Notas Importantes:**
 
 -   **`ResourceTemplate`:** El generador para `mcp_define_resource_dynamic` ahora usa `new ResourceTemplate(...)`. Asegúrate de que esta clase esté disponible en el entorno donde se ejecuta el código generado (importándola desde `@modelcontextprotocol/sdk/server/mcp.js`).
--   **Callback [params](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html):** El callback para recursos dinámicos en el SDK recibe un segundo argumento ([params](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html)) que es un objeto con las variables extraídas de la plantilla URI. El bloque `mcp_get_template_variable` ahora genera código para acceder a este objeto [params](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html).
+-   **Callback [params]():** El callback para recursos dinámicos en el SDK recibe un segundo argumento ([params]()) que es un objeto con las variables extraídas de la plantilla URI. El bloque `mcp_get_template_variable` ahora genera código para acceder a este objeto [params]().
 -   **API Cliente/Servidor:** Los generadores para `mcp_read_resource` y `mcp_list_resources` asumen una API como `mcp.resources.read()` y `mcp.resources.list()`. Ajusta esto a tu implementación real.
 -   **Paso de Datos:** Se sigue usando la técnica de variable temporal (`__resource_callback_body`) para pasar el cuerpo del callback al bloque definidor.
 -   **Errores:** Se añadió un `try...catch` básico en los generadores de definición de recursos.
@@ -463,13 +463,13 @@ Con estos archivos, tienes una implementación más completa y alineada con las 
 
 1.  **Sin Zod:** El bloque `mcp_tool_parameter` ya no tiene el dropdown de tipo. El generador `mcp_tool_parameter` ahora solo añade el *nombre* del parámetro a un array temporal (`__temp_param_names`). El generador `mcp_define_tool` ya no construye un `toolSchema` con Zod, sino que pasa el array de nombres (convertido a string JSON) a `servidor.tool`. **Nota:** Deberás ajustar la firma de tu función `servidor.tool` en el backend para aceptar este array de nombres en lugar de un esquema Zod.
 2.  **Corrección del `ReferenceError`:**
-    -   El error ocurría porque el generador `mcp_define_tool` intentaba usar la variable [__tool_callback_body](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html) (y las otras) *dentro* de la plantilla [processingCode](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html) *antes* de que el código de los bloques internos ([configCode](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html)) tuviera la oportunidad de definirla.
+    -   El error ocurría porque el generador `mcp_define_tool` intentaba usar la variable [__tool_callback_body]() (y las otras) *dentro* de la plantilla [processingCode]() *antes* de que el código de los bloques internos ([configCode]()) tuviera la oportunidad de definirla.
     -   **Solución:**
         -   Declaramos las variables (`toolDescription`, `toolParamNames`, `toolCallbackBody`) *fuera* de cualquier plantilla, con valores por defecto.
         -   Creamos un IIFE (Immediately Invoked Function Expression) que declara variables *temporales* (`__temp_...`).
-        -   Dentro del IIFE, ejecutamos [configCode](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html). Esto llama a los generadores de los bloques internos (`mcp_tool_description`, etc.), los cuales ahora asignan sus resultados a las variables *temporales* (`__temp_description`, `__temp_param_names`, `__temp_callback_body`).
+        -   Dentro del IIFE, ejecutamos [configCode](). Esto llama a los generadores de los bloques internos (`mcp_tool_description`, etc.), los cuales ahora asignan sus resultados a las variables *temporales* (`__temp_description`, `__temp_param_names`, `__temp_callback_body`).
         -   Al final del IIFE, asignamos los valores de las variables temporales a las variables externas (`toolDescription = __temp_description;`, etc.).
         -   Finalmente, definimos `toolCallback` y llamamos a `servidor.tool` usando las variables externas (`toolDescription`, `toolParamNames`, `toolCallbackBody`) que ahora contienen los valores correctos.
-    -   Se usa [JSON.stringify](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html) en los generadores internos y en la llamada final para manejar correctamente el escapado de strings (descripción, cuerpo del callback, array de nombres).
+    -   Se usa [JSON.stringify]() en los generadores internos y en la llamada final para manejar correctamente el escapado de strings (descripción, cuerpo del callback, array de nombres).
 
 Ahora la implementación es más simple, no depende de Zod para la definición de herramientas, y el orden de ejecución en el generador `mcp_define_tool` debería ser correcto, evitando el `ReferenceError`.
