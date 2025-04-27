@@ -6,7 +6,7 @@ Con caracter eminentemente práctico y de spike (enfangarse con código), el pre
 npx @blockly/create-package app blockly-mcp-common-palette
 ```
 
-![](./PICS/mcp_0000.png)
+![](./PICS/MCP_0000.png)
 
 MCP se propone, desde [Anthropic](https://www.anthropic.com/news/model-context-protocol), a finales del año pasado, a la hora de [modelizar escenas "agentic"](https://modelcontextprotocol.io/introduction) en las que varios autómatas comparten recursos en tareas orquestadas por el usuario. MCP se define como un posible protocolo para crear un primer gran estandar que permita a fabricantes, operadores e ingenieros unificar sus esfuerzos y aprovechar sinergias. 
 
