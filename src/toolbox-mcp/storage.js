@@ -67,12 +67,6 @@ export const tstorage = [
                         },
                     },
                     FILTER: {
-                        shadow: {
-                            type: "text",
-                            fields: {
-                                TEXT: "{ id: 1 }",
-                            },
-                        },
                     },
                 },
             },
@@ -88,14 +82,7 @@ export const tstorage = [
                             },
                         },
                     },
-                    FILTER: {
-                        shadow: {
-                            type: "text",
-                            fields: {
-                                TEXT: "{ id: 1 }",
-                            },
-                        },
-                    },
+                    FILTER: {},
                 },
             },
             {

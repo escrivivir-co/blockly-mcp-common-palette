@@ -4,91 +4,64 @@ export const tresources = [
         name: "MCP Recursos",
         colour: "#A65C81",
         contents: [
+            // --- Definición de Recursos ---
             {
                 kind: "block",
                 type: "mcp_define_resource_static",
                 inputs: {
                     NAME: {
-                        shadow: {
-                            type: "text",
-                            fields: {
-                                TEXT: "recurso",
-                            },
-                        },
+                        shadow: { type: "text", fields: { TEXT: "mi_recurso_estatico" } },
                     },
                     URI: {
-                        shadow: {
-                            type: "text",
-                            fields: {
-                                TEXT: "ejemplo://recurso",
-                            },
-                        },
+                        shadow: { type: "text", fields: { TEXT: "static://valor" } },
                     },
                 },
             },
             {
                 kind: "block",
-                type: "mcp_define_resource_template",
+                type: "mcp_define_resource_dynamic", // Nuevo bloque para plantillas
                 inputs: {
                     NAME: {
-                        shadow: {
-                            type: "text",
-                            fields: {
-                                TEXT: "plantilla",
-                            },
-                        },
+                        shadow: { type: "text", fields: { TEXT: "mi_recurso_dinamico" } },
                     },
-                    TEMPLATE: {
-                        shadow: {
-                            type: "text",
-                            fields: {
-                                TEXT: "ejemplo://{param}",
-                            },
-                        },
+                    TEMPLATE_URI: { // URI con placeholders como {param}
+                        shadow: { type: "text", fields: { TEXT: "dynamic://items/{itemId}" } },
                     },
                 },
             },
             {
                 kind: "block",
-                type: "mcp_resource_callback",
+                type: "mcp_resource_callback", // Usado por ambos tipos de definición
             },
+            // --- Dentro del Callback ---
             {
                 kind: "block",
                 type: "mcp_return_resource_content",
                 inputs: {
-                    URI: {
-                        shadow: {
-                            type: "text",
-                            fields: {
-                                TEXT: "",
-                            },
-                        },
+                    URI: { // La URI específica que se está retornando
+                        shadow: { type: "text", fields: { TEXT: "" } }, // Dejar vacío, se suele obtener de la entrada del callback
                     },
                     TEXT: {
-                        shadow: {
-                            type: "text",
-                            fields: {
-                                TEXT: "Contenido del recurso",
-                            },
-                        },
+                        shadow: { type: "text", fields: { TEXT: "Contenido del recurso" } },
                     },
                 },
             },
             {
                 kind: "block",
-                type: "mcp_resource_metadata",
+                type: "mcp_get_template_variable", // Nuevo: Para obtener {itemId} dentro del callback dinámico
+                inputs: {
+                    VAR_NAME: {
+                        shadow: { type: "text", fields: { TEXT: "itemId" } },
+                    },
+                },
             },
+             // --- Interacción con Recursos (Cliente/Servidor) ---
             {
                 kind: "block",
                 type: "mcp_read_resource",
                 inputs: {
                     URI: {
-                        shadow: {
-                            type: "text",
-                            fields: {
-                                TEXT: "ejemplo://recurso",
-                            },
-                        },
+                        shadow: { type: "text", fields: { TEXT: "dynamic://items/123" } },
                     },
                 },
             },
@@ -96,10 +69,11 @@ export const tresources = [
                 kind: "block",
                 type: "mcp_list_resources",
             },
-            {
-                kind: "block",
-                type: "mcp_get_template_variables",
-            },
+            // mcp_resource_metadata podría ser útil si se implementa la capacidad
+            // {
+            //     kind: "block",
+            //     type: "mcp_resource_metadata",
+            // },
         ],
     },
 ];

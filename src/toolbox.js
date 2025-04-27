@@ -3,7 +3,6 @@ import { tsetup } from './toolbox-mcp/setup';
 import { tresources } from './toolbox-mcp/resources';
 import { ttools } from './toolbox-mcp/tools';
 import { tprompts } from './toolbox-mcp/prompts';
-import { tevents } from './toolbox-mcp/events';
 import { tauth } from './toolbox-mcp/auth';
 import { tstorage } from './toolbox-mcp/storage';
 import { thost } from './toolbox-mcp/host';
@@ -37,10 +36,6 @@ export const toolbox = {
         ...tresources,
         ...ttools,
         ...tprompts,
-		{
-			kind: "sep",
-		},
-        ...tevents,
 		{
 			kind: "sep",
 		},
