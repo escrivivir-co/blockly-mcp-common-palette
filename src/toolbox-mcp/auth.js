@@ -1,69 +1,54 @@
 export const tauth = [
-    {
-        kind: "category",
-        name: "MCP Autenticación",
-        colour: "#815CA6",
-        contents: [
-            {
-                kind: "block",
-                type: "mcp_configure_oauth",
-                inputs: {
-                    URL_PROVIDER: {
-                        shadow: {
-                            type: "text",
-                            fields: {
-                                TEXT: "https://auth.example.com",
-                            },
-                        },
-                    },
-                    CLIENT_ID: {
-                        shadow: {
-                            type: "text",
-                            fields: {
-                                TEXT: "mi-cliente",
-                            },
-                        },
-                    },
-                    SCOPE: {
-                        shadow: {
-                            type: "text",
-                            fields: {
-                                TEXT: "read write",
-                            },
-                        },
-                    },
-                },
+  {
+    kind: "category",
+    name: "MCP Auth",
+    colour: "#7B9EA8",
+    contents: [
+      {
+        kind: "block",
+        type: "mcp_create_auth_manager",
+        fields: {
+          AUTH_TYPE: "oauth"
+        },
+        inputs: {
+          SECRET: {
+            shadow: {
+              type: "text",
+              fields: {
+                TEXT: "mi-secreto-123",
+              },
             },
-            {
-                kind: "block",
-                type: "mcp_define_protected_resource",
-            },
-            {
-                kind: "block",
-                type: "mcp_define_protected_tool",
-            },
-            {
-                kind: "block",
-                type: "mcp_verify_permissions",
-                inputs: {
-                    PERMISSION: {
-                        shadow: {
-                            type: "text",
-                            fields: {
-                                TEXT: "read",
-                            },
-                        },
-                    },
-                },
-            },
-            {
-                kind: "block",
-                type: "mcp_get_auth_token",
-            },
-            {
-                kind: "block",
-                type: "mcp_get_auth_user",
-            },
-        ],
-    },
+          },
+        },
+      },
+      {
+        kind: "block",
+        type: "mcp_define_resource_protected",
+      },
+      {
+        kind: "block",
+        type: "mcp_define_tool_protected",
+      },
+      {
+        kind: "block",
+        type: "mcp_generate_auth_token",
+      },
+      {
+        kind: "block",
+        type: "mcp_get_request_auth_token",
+      },
+      {
+        kind: "block",
+        type: "mcp_get_auth_user_id",
+      },
+      {
+        kind: "block",
+        type: "mcp_test_read_resource_with_auth",
+      },
+      {
+        kind: "block",
+        type: "mcp_test_call_tool_with_auth",
+      },
+    ],
+  }
 ];

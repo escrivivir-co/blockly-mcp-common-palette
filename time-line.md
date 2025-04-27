@@ -21,7 +21,6 @@ Actualmente, visitando [la tabla comparativa](https://modelcontextprotocol.io/cl
 [PROMPT_HISTORY/00_write_a_prompt.md](./PROMPT_HISTORY/00_write_a_prompt.md).
 
 
-
 ### Plan
 
 [PROMPT_HISTORY/01_create_a_plan.md](./PROMPT_HISTORY/01_create_a_plan.md).
