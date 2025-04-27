@@ -3,6 +3,10 @@
 MCP Blockly Studio
 ==================
 
+- [Repo](https://jsanchezamai.github.io/blockly-mcp-common-palette)
+- [Editor Showcase](https://jsanchezamai.github.io/blockly-mcp-common-palette)
+- [Editor Blockly](https://jsanchezamai.github.io/blockly-mcp-common-palette/dist/)
+
 Un entorno de programación visual para crear aplicaciones basadas en el Protocolo de Contexto de Modelo (MCP) utilizando Blockly de Google.
 
 ![Interfaz de MCP Blockly Studio](./PICS/mcp_monaco.png)
