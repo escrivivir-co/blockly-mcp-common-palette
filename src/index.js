@@ -1,12 +1,6 @@
-/**
- * @license
- * Copyright 2023 Google LLC
- * SPDX-License-Identifier: Apache-2.0
- */
-
 import * as Blockly from "blockly";
 import { blocks } from "./blocks/text";
-import "./blocks/mcp_blocks";
+import "./blocks/mcp_blocks"; // Asegúrate que esto importe tus definiciones de bloques MCP
 import { forBlock } from "./generators/javascript";
 import { javascriptGenerator } from "blockly/javascript";
 import { save, load } from "./serialization";
@@ -16,6 +10,29 @@ import { tutorial1XML } from "./tutorials/tutorial1";
 import { tutorial2XML } from "./tutorials/tutorial2";
 import { tutorial3XML } from "./tutorials/tutorial3";
 import { tutorial4XML } from "./tutorials/tutorial4";
+import * as monaco from "monaco-editor";
+
+// --- Configuración Global para Workers de Monaco ---
+// Necesario para que Monaco sepa dónde encontrar sus workers empaquetados por Webpack
+self.MonacoEnvironment = {
+    getWorkerUrl: function (moduleId, label) {
+        // Quita el './' - Asume que los workers se sirven desde la raíz
+        if (label === 'json') {
+            return 'json.worker.bundle.js';
+        }
+        if (label === 'css' || label === 'scss' || label === 'less') {
+            return 'css.worker.bundle.js';
+        }
+        if (label === 'html' || label === 'handlebars' || label === 'razor') {
+            return 'html.worker.bundle.js';
+        }
+        if (label === 'typescript' || label === 'javascript') {
+            return 'ts.worker.bundle.js';
+        }
+        return 'editor.worker.bundle.js';
+    },
+};
+// --- Fin Configuración Monaco ---
 
 // Mapa de tutoriales disponibles
 const tutorials = {
@@ -27,8 +44,10 @@ const tutorials = {
     // tutorial5: tutorial5XML
 };
 
+// --- Variables Globales ---
 let workspace = null;
 let currentProject = "empty";
+let monacoEditorInstance = null; // Instancia de Monaco
 
 /**
  * Inicializa o reinicia el entorno de Blockly
@@ -82,7 +101,7 @@ function initBlockly(cleanExisting = true) {
     });
 
     // Registrar bloques y generador
-    Blockly.common.defineBlocks(blocks);
+    Blockly.common.defineBlocks(blocks); // Asegúrate que 'blocks' incluya tus bloques MCP si no se importan con side effects
     Object.assign(javascriptGenerator.forBlock, forBlock);
 
     return newWorkspace;
@@ -92,22 +111,25 @@ function initBlockly(cleanExisting = true) {
  * Genera y muestra el código JavaScript basado en el workspace actual
  */
 function updateCode() {
-    const codeDiv = document.getElementById("generatedCode").firstChild;
     const outputDiv = document.getElementById("output");
 
     // Generar código JavaScript
     const code = javascriptGenerator.workspaceToCode(workspace);
 
-    // Actualizar la visualización del código
-    codeDiv.innerText = code;
+    // Actualizar la visualización del código usando Monaco Editor
+    if (monacoEditorInstance) {
+        monacoEditorInstance.setValue(code);
+    } else {
+        // Este warning ya no debería aparecer si el orden de initApp es correcto
+        console.warn("Instancia de Monaco Editor no inicializada todavía.");
+    }
 
     // Limpiar salida anterior
     outputDiv.innerHTML = "";
 
     // Ejecutar el código generado (con precaución)
     try {
-        // En un entorno de producción, considera alternativas a eval()
-        eval(code);
+        // eval(code);
     } catch (error) {
         console.error("Error ejecutando el código generado:", error);
         outputDiv.innerHTML = `<div class="error">Error: ${error.message}</div>`;
@@ -150,10 +172,10 @@ function loadProject(projectId) {
 
             // Ajustar la visualización
             workspace.scrollCenter();
-            Blockly.svgResize(workspace);
+            Blockly.svgResize(workspace); // Llama a resize después de cargar
 
-            // Actualizar el código generado
-            updateCode();
+            // Actualizar el código generado y ejecutarlo
+            updateCode(); // << Asegúrate que se llama aquí
         } catch (error) {
             console.error("Error al cargar el proyecto:", error);
             alert(
@@ -170,29 +192,62 @@ function loadProject(projectId) {
  * Inicializa la aplicación
  */
 function initApp() {
-    // Inicializar el workspace de Blockly
-    workspace = initBlockly(false);
+    // 1. Inicializar el workspace de Blockly
+    workspace = initBlockly(false); // No limpiar al inicio, `load` lo hará si es necesario
 
-    // Configurar listeners de eventos para el workspace
+    // 2. Inicializar Monaco Editor (ANTES de cargar/actualizar código)
+    try {
+        monacoEditorInstance = monaco.editor.create(
+            document.getElementById("monacoContainer"),
+            {
+                value: "// Código generado aparecerá aquí...",
+                language: "javascript",
+                theme: "vs-dark",
+                readOnly: true,
+            }
+        );
+        console.log("Monaco Editor inicializado.");
+    } catch (error) {
+        console.error("Error inicializando Monaco Editor:", error);
+    }
+
+    // 3. DEPRECATED
+
+    // 4. Configurar listeners de eventos para el workspace (SOLO UNA VEZ)
     workspace.addChangeListener((e) => {
-        // No guardar durante eventos UI o arrastres
-        if (e.isUiEvent || workspace.isDragging()) return;
-        if (e.type === Blockly.Events.FINISHED_LOADING) return;
-
-        // Guardar el estado
+        // No guardar/actualizar durante eventos UI, arrastres o carga inicial
+        if (
+            e.isUiEvent ||
+            workspace.isDragging() ||
+            e.type === Blockly.Events.FINISHED_LOADING
+        ) {
+            return;
+        }
+        // Guardar el estado en cambios significativos
         save(workspace);
-
-        // Actualizar el código generado
+        // Actualizar el código generado y ejecutarlo
         updateCode();
     });
 
-    // Cargar el estado guardado (si existe)
-    load(workspace);
+    // 5. Cargar el estado guardado (si existe) o el proyecto por defecto
+    //    Esto puede disparar el listener anterior si carga bloques,
+    //    lo cual llamará a updateCode() después de que todo esté inicializado.
+    try {
+        load(workspace);
+        console.log("Workspace cargado desde localStorage.");
+    } catch (e) {
+        console.warn(
+            "No se pudo cargar desde localStorage, iniciando vacío.",
+            e
+        );
+        workspace.clear(); // Asegurar que esté vacío si la carga falla
+    }
 
-    // Mostrar código inicial
+    // 6. Mostrar código inicial (basado en lo cargado o vacío)
+    //    Llamar a updateCode aquí asegura que se muestre algo incluso si load no disparó el listener
     updateCode();
 
-    // Configurar el selector de proyectos
+    // 7. Configurar el selector de proyectos
     const projectSelect = document.getElementById("projectSelect");
     if (projectSelect) {
         projectSelect.addEventListener("change", (e) => {
@@ -206,10 +261,16 @@ function initApp() {
         console.warn("No se encontró el elemento 'projectSelect' en el DOM");
     }
 
-    // Configurar redimensionamiento automático
+    // 8. Configurar redimensionamiento automático
     window.addEventListener("resize", () => {
         Blockly.svgResize(workspace);
+        if (monacoEditorInstance) {
+            monacoEditorInstance.layout(); // Redimensionar Monaco también
+        }
     });
+
+    // ELIMINADO: Llamada redundante a addChangeListener
+    // ELIMINADO: Llamada redundante a updateCode al final
 }
 
 // Inicializar la aplicación cuando el DOM esté listo
@@ -221,7 +282,17 @@ window.blocklyApp = {
     workspace: () => workspace,
     getCurrentProject: () => currentProject,
     reset: () => {
-        workspace = initBlockly(true);
-        updateCode();
+        // Limpiar localStorage al resetear podría ser útil
+        localStorage.removeItem("blocklySave"); // O el nombre de tu clave de guardado
+        workspace = initBlockly(true); // Reinicia Blockly
+
+        /*
+        // Reiniciar servidor MCP si es necesario
+        if (servidor && typeof servidor.resetDefinitions === 'function') {
+            servidor.resetDefinitions();
+        } else {
+             // O recrear la instancia si no hay reset
+        }*/
+        updateCode(); // Actualizar UI
     },
 };

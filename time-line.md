@@ -39,8 +39,13 @@ Actualmente, visitando [la tabla comparativa](https://modelcontextprotocol.io/cl
 
 [PROMPT_HISTORY/07_lets_check_the_project.md](./PROMPT_HISTORY/07_lets_check_the_project.md)
 
-### Last sprint
+### Otras metas
 
 [PROMPT_HISTORY/08_complete_tutorials.md](./PROMPT_HISTORY/08_complete_tutorials.md)
 [PROMPT_HISTORY/09_change_its_mine.md](./PROMPT_HISTORY/09_change_its_mine.md)
+[PROMPT_HISTORY/10_follow_up_better_editor.md](./PROMPT_HISTORY/10_follow_up_better_editor.md)
+
+### Last sprint
+
+
 
