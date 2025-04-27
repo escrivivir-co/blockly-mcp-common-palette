@@ -8,64 +8,63 @@ const config = {
     output: {
         // Compile the source files into a bundle.
         filename: "bundle.js",
-        path: path.resolve(__dirname, "dist"),
+        path: path.resolve(__dirname, "dist"), // Base path (production)
         clean: true,
+        publicPath: "/", // Serve assets from root
     },
     // Enable webpack-dev-server to get hot refresh of the app.
     devServer: {
-        static: "./build",
+        // static: "./build", // <<-- Comenta o elimina esta línea
+        // Configuración más explícita para servir desde 'build' en desarrollo
+        static: {
+            directory: path.resolve(__dirname, "build"),
+            publicPath: "/", // Mantener consistente con MonacoEnvironment
+        },
+        // Asegúrate que el dev server observe los cambios en la carpeta de salida
+        // por si el plugin escribe directamente al disco en lugar de memoria (poco probable pero posible)
+        watchFiles: [path.resolve(__dirname, "build")],
     },
     module: {
         rules: [
             {
                 test: /\.css$/i,
-                use: ["style-loader", "css-loader"], // Asegúrate que algo así exista
+                use: ["style-loader", "css-loader"],
             },
-            // Monaco también usa fuentes .ttf
             {
                 test: /\.ttf$/,
-                type: "asset/resource", // O usa 'url-loader'/'file-loader' si usas Webpack 4
+                type: "asset/resource",
             },
         ],
     },
     plugins: [
-        // Generate the HTML index page based on our template.
-        // This will output the same index page with the bundle we
-        // created above added in a script tag.
         new HtmlWebpackPlugin({
             template: "src/index.html",
         }),
         new MonacoWebpackPlugin({
-            // Lista de lenguajes a incluir. Para empezar:
-            languages: ["javascript"],
-            // Puedes añadir más características si las necesitas,
-            // pero empieza con lo mínimo para mantener el tamaño bajo.
-            // features: ['!gotoSymbol'] // Ejemplo: excluir una característica
+            languages: ["javascript", "typescript"], // Añadir typescript explícitamente
+            filename: "[name].worker.bundle.js",
+            publicPath: "/", // Usar ruta absoluta para los workers
         }),
     ],
 };
 
 module.exports = (env, argv) => {
     if (argv.mode === "development") {
-        // Set the output path to the `build` directory
-        // so we don't clobber production builds.
-        config.output.path = path.resolve(__dirname, "build");
+        // Set the output path to the `build` directory for development builds
+        config.output.path = path.resolve(__dirname, "build"); // <<-- Asegúrate que esto sigue aquí
 
-        // Generate source maps for our code for easier debugging.
-        // Not suitable for production builds. If you want source maps in
-        // production, choose a different one from https://webpack.js.org/configuration/devtool
         config.devtool = "eval-cheap-module-source-map";
 
-        // Include the source maps for Blockly for easier debugging Blockly code.
         config.module.rules.push({
             test: /(blockly\/.*\.js)$/,
             use: [require.resolve("source-map-loader")],
             enforce: "pre",
         });
 
-        // Ignore spurious warnings from source-map-loader
-        // It can't find source maps for some Closure modules and that is expected
         config.ignoreWarnings = [/Failed to parse source map/];
+
+        console.log(`Output path: ${config.output.path}`);
     }
+    // Para producción, output.path se queda como 'dist' (definido en la config base)
     return config;
 };

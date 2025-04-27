@@ -16,20 +16,20 @@ import * as monaco from "monaco-editor";
 // Necesario para que Monaco sepa dónde encontrar sus workers empaquetados por Webpack
 self.MonacoEnvironment = {
     getWorkerUrl: function (moduleId, label) {
-        // Quita el './' - Asume que los workers se sirven desde la raíz
-        if (label === 'json') {
-            return 'json.worker.bundle.js';
+        // Usar rutas absolutas desde la raíz
+        if (label === "json") {
+            return "/json.worker.bundle.js";
         }
-        if (label === 'css' || label === 'scss' || label === 'less') {
-            return 'css.worker.bundle.js';
+        if (label === "css" || label === "scss" || label === "less") {
+            return "/css.worker.bundle.js";
         }
-        if (label === 'html' || label === 'handlebars' || label === 'razor') {
-            return 'html.worker.bundle.js';
+        if (label === "html" || label === "handlebars" || label === "razor") {
+            return "/html.worker.bundle.js";
         }
-        if (label === 'typescript' || label === 'javascript') {
-            return 'ts.worker.bundle.js';
+        if (label === "typescript" || label === "javascript") {
+            return "/ts.worker.bundle.js";
         }
-        return 'editor.worker.bundle.js';
+        return "/editor.worker.bundle.js";
     },
 };
 // --- Fin Configuración Monaco ---
@@ -111,7 +111,7 @@ function initBlockly(cleanExisting = true) {
  * Genera y muestra el código JavaScript basado en el workspace actual
  */
 function updateCode() {
-    const outputDiv = document.getElementById("output");
+    // const outputDiv = document.getElementById("output"); // << ELIMINAR ESTA LÍNEA
 
     // Generar código JavaScript
     const code = javascriptGenerator.workspaceToCode(workspace);
@@ -120,20 +120,24 @@ function updateCode() {
     if (monacoEditorInstance) {
         monacoEditorInstance.setValue(code);
     } else {
-        // Este warning ya no debería aparecer si el orden de initApp es correcto
         console.warn("Instancia de Monaco Editor no inicializada todavía.");
     }
 
-    // Limpiar salida anterior
-    outputDiv.innerHTML = "";
+    // Limpiar salida anterior - YA NO ES NECESARIO
+    // if (outputDiv) { // << ELIMINAR ESTE BLOQUE
+    //     outputDiv.innerHTML = "";
+    // }
 
-    // Ejecutar el código generado (con precaución)
-    try {
-        // eval(code);
-    } catch (error) {
-        console.error("Error ejecutando el código generado:", error);
-        outputDiv.innerHTML = `<div class="error">Error: ${error.message}</div>`;
-    }
+    // Ejecutar el código generado (Comentado por ahora)
+    // try {
+    //     // eval(code);
+    // } catch (error) {
+    //     console.error("Error ejecutando el código generado:", error);
+    //     // Mostrar error en consola es suficiente por ahora
+    //     // if (outputDiv) { // << ELIMINAR ESTA LÍNEA
+    //     //     outputDiv.innerHTML = `<div class="error">Error: ${error.message}</div>`;
+    //     // }
+    // }
 }
 
 /**
@@ -193,10 +197,23 @@ function loadProject(projectId) {
  */
 function initApp() {
     // 1. Inicializar el workspace de Blockly
-    workspace = initBlockly(false); // No limpiar al inicio, `load` lo hará si es necesario
+    workspace = initBlockly(false);
 
-    // 2. Inicializar Monaco Editor (ANTES de cargar/actualizar código)
+    // 2. Inicializar Monaco Editor (con limpieza previa)
     try {
+        // Limpiar cualquier instancia anterior
+        if (monacoEditorInstance) {
+            monacoEditorInstance.dispose();
+            monacoEditorInstance = null;
+        }
+        
+        // También limpiar el contenedor para evitar atributos persistentes
+        const container = document.getElementById("monacoContainer");
+        if (container) {
+            container.innerHTML = '';
+        }
+        
+        // Ahora crear una nueva instancia limpia
         monacoEditorInstance = monaco.editor.create(
             document.getElementById("monacoContainer"),
             {
@@ -210,7 +227,7 @@ function initApp() {
     } catch (error) {
         console.error("Error inicializando Monaco Editor:", error);
     }
-
+    
     // 3. DEPRECATED
 
     // 4. Configurar listeners de eventos para el workspace (SOLO UNA VEZ)
@@ -269,12 +286,42 @@ function initApp() {
         }
     });
 
+    // 9. Configurar botón de descarga (Añadir esto)
+    const downloadBtn = document.getElementById("downloadCodeBtn");
+    if (downloadBtn && monacoEditorInstance) {
+        downloadBtn.addEventListener("click", () => {
+            const code = monacoEditorInstance.getValue();
+            const blob = new Blob([code], { type: "text/javascript" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            // Puedes obtener el nombre del proyecto actual si lo guardas en una variable
+            a.download = `${currentProject || "blockly_code"}.js`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        });
+        console.log("Botón de descarga configurado.");
+    } else {
+        console.warn(
+            "No se pudo configurar el botón de descarga (elemento o editor no encontrado)."
+        );
+    }
+
     // ELIMINADO: Llamada redundante a addChangeListener
     // ELIMINADO: Llamada redundante a updateCode al final
 }
 
+let appInitialized = false;
+
 // Inicializar la aplicación cuando el DOM esté listo
-document.addEventListener("DOMContentLoaded", initApp);
+document.addEventListener("DOMContentLoaded", () => {
+    if (!appInitialized) {
+        initApp();
+        appInitialized = true;
+    }
+});
 
 // Exportar funciones útiles para depuración o uso desde la consola
 window.blocklyApp = {
@@ -296,3 +343,15 @@ window.blocklyApp = {
         updateCode(); // Actualizar UI
     },
 };
+
+// Manejo de Hot Module Replacement para evitar múltiples inicializaciones
+if (module.hot) {
+    module.hot.dispose(() => {
+        if (monacoEditorInstance) {
+            monacoEditorInstance.dispose();
+            monacoEditorInstance = null;
+        }
+        // Limpiar otros recursos si es necesario
+    });
+    module.hot.accept();
+}
