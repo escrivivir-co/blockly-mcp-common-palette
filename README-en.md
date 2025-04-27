@@ -2,6 +2,7 @@
 
 # MCP Blockly Studio
 
+- [time-line.md](./time-line.md) White paper.
 - [Repo](https://jsanchezamai.github.io/blockly-mcp-common-palette)
 - [Editor Showcase](https://jsanchezamai.github.io/blockly-mcp-common-palette)
 - [Editor Blockly](https://jsanchezamai.github.io/blockly-mcp-common-palette/dist/)

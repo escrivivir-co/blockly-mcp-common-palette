@@ -3,6 +3,7 @@
 MCP Blockly Studio
 ==================
 
+- [time-line.md](./time-line.md) Detalles y white paper.
 - [Repo](https://jsanchezamai.github.io/blockly-mcp-common-palette)
 - [Editor Showcase](https://jsanchezamai.github.io/blockly-mcp-common-palette)
 - [Editor Blockly](https://jsanchezamai.github.io/blockly-mcp-common-palette/dist/)
@@ -51,14 +52,14 @@ Primeros pasos
 Estructura del proyecto
 -----------------------
 
-El archivo time-line.md es el registro principal de cambios para obtener una visión general del proyecto. En la carpeta PROMPT_HISTORY se encuentra la teoría en profundidad para la línea temporal.
-
+- [time-line.md](./time-line.md) es el registro principal de cambios para obtener una visión general del proyecto.
 -   [src]() - Código fuente de la aplicación
     -   `blocks/` - Definiciones de bloques personalizados de Blockly
     -   `toolbox-mcp/` - Categorías de la caja de herramientas específicas para MCP
     -   `generators/` - Generadores de código para traducir bloques a JavaScript
--   [PICS]() - Capturas de pantalla e imágenes del proyecto
--   [mcp-ts-sdk]() - SDK de TypeScript para MCP (incluido como dependencia)
+- [PICS](./PICS/) - Capturas de pantalla e imágenes del proyecto
+- [PROMPT_HISTORY](./PROMPT_HISTORY/) se encuentra la teoría en profundidad para la línea temporal.
+- [mcp-ts-sdk](https://github.com/modelcontextprotocol/typescript-sdk) - SDK de TypeScript para MCP (incluido como dependencia)
 
 Construido con
 --------------
