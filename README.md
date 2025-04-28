@@ -4,18 +4,18 @@ MCP Blockly Studio
 ==================
 
 - [time-line.md](./time-line.md) Detalles y white paper.
-- [Repo](https://github.com/jsanchezamai/blockly-mcp-common-palette)
-- [Editor Showcase](https://jsanchezamai.github.io/blockly-mcp-common-palette)
-- [Editor Blockly](https://jsanchezamai.github.io/blockly-mcp-common-palette/dist/)
+- (github) [Repo](https://github.com/jsanchezamai/blockly-mcp-common-palette)
+- Web (gh-pages) [Editor Showcase](https://jsanchezamai.github.io/blockly-mcp-common-palette)
+- Web (gh-pages) [Editor Blockly](https://jsanchezamai.github.io/blockly-mcp-common-palette/dist/)
 
 Un entorno de programación visual para crear aplicaciones basadas en el Protocolo de Contexto de Modelo (MCP) utilizando Blockly de Google.
 
-![Interfaz de MCP Blockly Studio](./PICS/mcp_monaco.png)
+![Interfaz de MCP Blockly Studio](./PICS/v001_.png)
 
 Descripción general
 -------------------
 
-MCP Blockly Studio proporciona un enfoque basado en bloques para construir aplicaciones que siguen la [especificación del Protocolo de Contexto de Modelo](). El proyecto utiliza el [SDK de TypeScript para MCP]() para crear servidores, clientes y otros componentes compatibles.
+MCP Blockly Studio proporciona un enfoque basado en bloques para construir aplicaciones que siguen la especificación del Protocolo de Contexto de Modelo. El proyecto utiliza el SDK de TypeScript para MCP para crear servidores, clientes y otros componentes compatibles.
 
 Los usuarios pueden:
 
@@ -36,7 +36,6 @@ MCP Blockly Studio incluye varios proyectos de tutorial:
 3.  **Asistente de Tareas**: Un servidor de gestión de tareas con autenticación OAuth
 4.  **Generador de Imágenes**: Un servidor que genera imágenes con notificaciones de progreso
 
-![Ejemplo de Tutorial](./PICS/mcp_tutorial_1_echo.png)
 
 Primeros pasos
 --------------
