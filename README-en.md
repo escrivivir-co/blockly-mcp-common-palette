@@ -2,16 +2,16 @@
 
 # MCP Blockly Studio
 
-- [time-line.md](./time-line.md) White paper.
-- [Repo](https://github.com/jsanchezamai/blockly-mcp-common-palette)
-- [Editor Showcase](https://jsanchezamai.github.io/blockly-mcp-common-palette)
-- [Editor Blockly](https://jsanchezamai.github.io/blockly-mcp-common-palette/dist/)
+- [time-line.md](./time-line.md) Detalles y white paper.
+- (github) [Repo](https://github.com/jsanchezamai/blockly-mcp-common-palette)
+- Web (gh-pages) [Editor Showcase](https://jsanchezamai.github.io/blockly-mcp-common-palette)
+- Web (gh-pages) [Editor Blockly](https://jsanchezamai.github.io/blockly-mcp-common-palette/dist/)
 
 A visual programming environment for creating Model Context Protocol (MCP) applications using Google's Blockly.
 
 [Demo https://jsanchezamai.github.io/blockly-mcp-common-palette](https://jsanchezamai.github.io/blockly-mcp-common-palette)
 
-![MCP Blockly Studio Interface](./PICS/mcp_monaco.png)
+![MCP Blockly Studio Interface](./PICS/v001_.png)
 
 ## Overview
 
@@ -34,7 +34,6 @@ MCP Blockly Studio includes several tutorial projects:
 3. **Task Assistant**: A task management server with OAuth authentication
 4. **Image Generator**: A server that generates images with progress notifications
 
-![Tutorial Example](./PICS/mcp_tutorial_1_echo.png)
 
 ## Getting Started
 
